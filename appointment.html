@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Lil's Healthcare</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <link href="assets/img/loo.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/css/main.css" rel="stylesheet">
+
+    <style>
+        .loading,
+        .sent-message,
+        .error-message {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            margin-top: 10px;
+        }
+
+        .fade-in {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .sent-message {
+            color: green;
+        }
+
+        .error-message {
+            color: red;
+        }
+
+        .phone-wrapper {
+            display: flex;
+            gap: 5px;
+        }
+
+        .phone-wrapper select {
+            max-width: 100px;
+        }
+
+        #phone-error,
+        #email-error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 4px;
+        }
+
+        #date-info {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header sticky-top">
+
+        <div class="topbar">
+            <marquee class="mar">Your Health, Our Priority. 
+                Schedule your Care today for expert advice and Personalized Care. 
+                Book now and start your wellness journey to heal later.....</marquee>
+            <div class="container d-flex justify-content-center justify-content-md-between">
+
+
+            </div>
+        </div>
+
+        <div class="branding d-flex align-items-center">
+
+            <div class="container position-relative d-flex align-items-center justify-content-between">
+                <a href="index.html" class="logo d-flex align-items-center me-auto">
+                    <div class="logo"></div>
+                    <img src="assets/img/loo.png" alt="">
+                    <h1 class="sitename">Lil's Healthcare</h1>
+                </a>
+
+                <nav id="navmenu" class="navmenu">
+                    <a class="cta-btn d-none d-sm-block" href="index.html">Back Home</a>
+                    <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+                </nav>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <section class="appointment section">
+        <div class="container section-title" data-aos="fade-up">
+            <h2>Book Your Appointment</h2>
+            <p>Schedule your visit with our healthcare professionals</p>
+        </div>
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form class="php-email-form" id="appointment-form">
+                        <div class="row">
+                            <div class="col-md-4 form-group">
+                                <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                            </div>
+                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="Your Email" required>
+                                <div id="email-error"></div>
+                            </div>
+                            <div class="col-md-4 form-group mt-3 mt-md-0">
+                                <div class="phone-wrapper">
+                                    <select name="country_code" class="form-select" required>
+                                        <option value="+233" selected>🇬🇭 +233</option>
+                                        <option value="+1">🇺🇸 +1</option>
+                                        <option value="+44">🇬🇧 +44</option>
+                                        <option value="+91">🇮🇳 +91</option>
+                                        <option value="+234">🇳🇬 +234</option>
+                                        <option value="+27">🇿🇦 +27</option>
+                                        <option value="+225">🇨🇮 +225</option>
+                                    </select>
+                                    <input type="tel" class="form-control" name="phone" id="phone"
+                                        placeholder="Phone Number" required>
+                                </div>
+                                <div id="phone-error"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 form-group mt-3">
+                                <input type="datetime-local" name="date" class="form-control" id="date" required>
+                                <small id="date-info">🗓️ Please note: Appointments can only be scheduled at least
+                                    <strong>7 days</strong>
+                                    from today.</small>
+                            </div>
+                            <div class="col-md-4 form-group mt-3">
+                                <select name="department" class="form-select" id="department" required>
+                                    <option value="">Select Department</option>
+                                    <option value="Cardiology">Department of Cardiology</option>
+                                    <option value="Hematology">Department of Hematology</option>
+                                    <option value="Pediatrics">Department of Pediatrics</option>
+                                    <option value="Ophthalmology">Department of Ophthalmology</option>
+                                    <option value="Neurology">Department of Neurology</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 form-group mt-3">
+                                <select name="doctor" class="form-select" id="doctor" required>
+                                    <option value="" data-department="">Select Doctor</option>
+                                    <option value="Jesu Henry" data-department="Cardiology" data-status="online">🟢 Jesu
+                                        Henry
+                                        (Cardiologist)</option>
+                                    <option value="Asantewa Appiah" data-department="Cardiology" data-status="online">🟢
+                                        Asantewaa Appiah
+                                        (Cardiologist)</option>
+                                    <option value="Sabrina Ofori" data-department="Cardiology" data-status="offline">🔴
+                                        Sabrina Ofori
+                                        (Cardiologist)</option>
+                                    <option value="Prince Lateef" data-department="Hematology" data-status="offline">🔴
+                                        Prince Lateef
+                                        (Hematologist)</option>
+                                    <option value="Seth Rollins" data-department="Hematology" data-status="online">🟢
+                                        Seth Rollins
+                                        (Hematologist)</option>
+                                    <option value="Michelle Aboagye" data-department="Hematology" data-status="offline">
+                                        🔴 Michelle Aboagye
+                                        (Hematologist)</option>
+                                    <option value="Michael Kumado" data-department="Pediatrics" data-status="online">🟢
+                                        Michael Kumado
+                                        (Pediatrician)</option>
+                                    <option value="Phillp Grah" data-department="Pediatrics" data-status="online">🟢
+                                        Phillp Grah
+                                        (Pediatrician)</option>
+                                    <option value="Precious Nelson" data-department="Pediatrics" data-status="offline">
+                                        🔴 Precious Nelson
+                                        (Pediatrician)</option>
+                                    <option value="Michael Osei-Donkor" data-department="Neurology"
+                                        data-status="online">🟢 Michael
+                                        Osei-Donkor (Neurologist)</option>
+                                    <option value="Saviour Vordzorgbe" data-department="Neurology" data-status="online">
+                                        🟢 Saviour
+                                        Vordzorgbe (Neurologist)</option>
+                                    <option value="Chantelle Asamoah" data-department="Neurology" data-status="offline">
+                                        🔴 Chantelle Asamoah
+                                        (Neurologist)</option>
+                                    <option value="Caroline Andoh" data-department="Ophthalmology" data-status="online">
+                                        🟢 Caroline Andoh
+                                        (Ophthalmologist)</option>
+                                    <option value="Lois Baah Kyeremaah" data-department="Ophthalmology"
+                                        data-status="online">🟢 Lois Baah
+                                        Kyeremaah (Ophthalmologist)</option>
+                                    <option value="Akwesi Effah" data-department="Ophthalmology" data-status="offline">
+                                        🔴 Akwesi Effah
+                                        (Ophthalmologist)</option>
+                                </select>
+                                <small id="doctor-status" style="margin-top: 5px; display: block; color: #555;"></small>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <textarea class="form-control" name="message" rows="5"
+                                placeholder="Message (Optional)"></textarea>
+                        </div>
+                        <input type="hidden" name="full_phone" id="full_phone">
+                        <div class="mt-3">
+                            <div class="loading">⏳ Sending...</div>
+                            <div class="sent-message">✅ Appointment request sent successfully. Thank you!</div>
+                            <div class="error-message">❌ Something went wrong. Please try again.</div>
+                            <div class="text-center"><button type="submit">Book Now</button></div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer" class="footer light-background">
+
+        <div class="container footer-top">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                    <a href="index.html" class="logo d-flex align-items-center">
+                        <span class="sitename">Lil's Healthcare</span>
+                    </a>
+                    <div class="footer-contact pt-3">
+                        <p>Accra-Tema</p>
+                        <p>Ghana, Community 7</p>
+                        <p class="mt-3"><strong>Phone:</strong> <span>+233 54 086 9472/+233 27 422 8833</span></p>
+                        <p><strong>Email:</strong> <span>lilcare02@gmail.com</span></p>
+                    </div>
+                    <div class="social-links d-flex mt-4">
+                        <a href=""><i class="bi bi-twitter-x"></i></a>
+                        <a href=""><i class="bi bi-facebook"></i></a>
+                        <a href=""><i class="bi bi-instagram"></i></a>
+                        <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-5 footer-links">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About us</a></li>
+                        <li><a href="#services">Services</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-5 footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li>Primary Care</li>
+                        <li>Telemedicine</li>
+                        <li>Palliative Care</li>
+                        <li>Imaging and Diagnostic Services</li>
+                        <li>Geriatric Care</li>
+                        <li>Pharmacy Servicees</li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-5 footer-links">
+                    <h4>Working Days</h4>
+                    <p>Monday-Sunday<br>24 hour service</p>
+                    <h4>Strong Hold</h4>
+                    <p>We belive that every patient will "prosper in all things and be in <b>good health</b>, just as
+                        your soul
+                        prospers".3 John 1:2</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container copyright text-center mt-4">
+            <p>© <span>2025</span> <strong class="px-1 sitename">Lil's Healthcare</strong> <span>All Rights
+                    Reserved</span> <span>Powered by<strong class="px-1 sitename"><a herf="#">JH TechStudio</a></strong></span></p>
+        </div>
+
+    </footer>
+
+    <script>
+        const appointmentform = document.querySelector("form");
+        const loading = appointmentform ? appointmentform.querySelector('.loading') : null;
+        const success = appointmentform ? appointmentform.querySelector('.sent-message') : null;
+        const error = appointmentform ? appointmentform.querySelector('.error-message') : null;
+        const fullPhone = document.getElementById('full_phone');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+        const phoneError = document.getElementById('phone-error');
+        const emailError = document.getElementById('email-error');
+        const countryCodeInput = appointmentform ? appointmentform.querySelector('[name="country_code"]') : null;
+        const dateInput = document.getElementById('date');
+        const doctorSelect = document.getElementById('doctor');
+        const departmentSelect = document.getElementById('department');
+        const doctorStatus = document.getElementById('doctor-status');
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            now.setDate(now.getDate() + 7);
+            const pad = n => n.toString().padStart(2, '0');
+            const formatted = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            dateInput.min = formatted;
+        });
+
+        function isPhoneValidForCountry(code, phone) {
+            const digitOnly = /^[0-9]+$/.test(phone);
+            if (!digitOnly) return false;
+            switch (code) {
+                case "+233": return phone.length === 9 && /^[235]/.test(phone);
+                case "+1": return phone.length === 10;
+                case "+44": return phone.length >= 10 && phone.length <= 11;
+                case "+234": return phone.length >= 10 && phone.length <= 11;
+                case "+91": return phone.length === 10;
+                case "+27": return phone.length === 9;
+                case "+225": return phone.length === 8;
+                default: return phone.length >= 7 && phone.length <= 15;
+            }
+        }
+
+        phoneInput.addEventListener('input', () => {
+            const phone = phoneInput.value.trim();
+            const code = countryCodeInput.value;
+            if (!isPhoneValidForCountry(code, phone)) {
+                phoneError.textContent = (code === "+233")
+                    ? "Ghana numbers must be 9 digits and start with 2, 3, or 5."
+                    : `Invalid number format for ${code}`;
+            } else {
+                phoneError.textContent = "";
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            const email = emailInput.value.trim();
+            emailError.textContent = emailRegex.test(email)
+                ? ""
+                : "Please enter a valid email address.";
+        });
+
+        doctorSelect.addEventListener('change', () => {
+            const selectedDoctor = doctorSelect.options[doctorSelect.selectedIndex];
+            const status = selectedDoctor.getAttribute('data-status');
+
+            doctorStatus.innerHTML = status === "online"
+                ? '🟢 <strong>Doctor is currently available</strong>'
+                : '🔴 <strong>Doctor is currently unavailable</strong>';
+        });
+
+        departmentSelect.addEventListener('change', () => {
+            const selectedDepartment = departmentSelect.value;
+            Array.from(doctorSelect.options).forEach(option => {
+                const docDept = option.getAttribute('data-department');
+                if (!docDept || selectedDepartment === "") {
+                    option.hidden = false;
+                } else {
+                    option.hidden = docDept !== selectedDepartment;
+                }
+            });
+            doctorSelect.selectedIndex = 0;
+            doctorStatus.innerHTML = "";
+        });
+
+        if (appointmentform) {
+            appointmentform.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(appointmentform);
+
+                {/*console.log(formData.get("name"));*/ }
+
+                if (!loading || !success || !error) return;
+                loading.classList.remove('fade-in');
+                success.classList.remove('fade-in');
+                error.classList.remove('fade-in');
+
+                const phone = phoneInput.value.trim();
+                const email = emailInput.value.trim();
+                const code = countryCodeInput.value;
+
+                let hasError = false;
+
+                if (!isPhoneValidForCountry(code, phone)) {
+                    phoneError.textContent = (code === "+233")
+                        ? "Ghana numbers must be 9 digits and start with 2, 3, or 5."
+                        : `Invalid number format for ${code}`;
+                    hasError = true;
+                }
+
+                if (!emailRegex.test(email)) {
+                    emailError.textContent = "Please enter a valid email address.";
+                    hasError = true;
+                }
+
+                if (hasError) {
+                    error.textContent = "❌ Please fix the errors before submitting.";
+                    error.classList.add('fade-in');
+                    setTimeout(() => error.classList.remove('fade-in'), 4000);
+                    return;
+                }
+
+                fullPhone.value = code + phone;
+                loading.classList.add('fade-in');
+
+                try {
+                    fetch("appointment.php", {
+                        method: 'POST',
+                        body: formData,
+                        headers: { Accept: 'application/json' }
+                    })
+                        .then(response => {
+                            loading.classList.remove('fade-in');
+                            if (response.ok) {
+                                appointmentform.reset();
+                                success.classList.add('fade-in');
+                                alert("Booking successful")
+                                setTimeout(() => success.classList.remove('fade-in'), 4000);
+                            } else {
+                                error.textContent = "❌ There was an error submitting the form.";
+                                error.classList.add('fade-in');
+                                window.alert("Booking failed, please try again")
+                                setTimeout(() => error.classList.remove('fade-in'), 4000);
+                            }
+                        })
+                        .catch(() => {
+                            loading.classList.remove('fade-in');
+                            error.textContent = "❌ Network error. Please try again.";
+                            error.classList.add('fade-in');
+                            setTimeout(() => error.classList.remove('fade-in'), 4000)
+                        })
+                } catch (error) {
+                    alert("An error occured")
+                    console.error(error);
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
